@@ -347,15 +347,15 @@ def astar_many_circles(maze):
         point_nodes.append(Node(None, end_points[i])) 
 
     """ 우선 dists의 정보를 얻기 위한 과정 """
-    """ dists로 heuristic에 사용되는 정보를 얻기 위함""" 
+    """ dists로 heuristic에 사용되는 정보를 얻기 위함"""
+    # 모든 점 (startpoint, endpoints) 각각 사이의 최단 dists를 구하기 위함
     two_nodes = itertools.combinations(point_nodes, 2)
     paths = [] # nC2 shortest paths
-    dists = {} # dists[(point1, point2)] = shortest path
+    dists: dict = {} # dists[(point1, point2)] = shortest path
 
     path_i = 0 # paths[] 과 dists[]에 사용되는 index
-    for i in list(two_nodes):
-        start = i[0] # start_node
-        end = i[1]   # end_node
+    for start, end in list(two_nodes):
+        ########
         start.g = end.g = end.h = 0
         start.h = manhatten_dist(start.location, end.location)
 
@@ -415,6 +415,9 @@ def astar_many_circles(maze):
                         continue
 
                 open_list.append(child)
+        # dist = start와 end 사이의 거리
+        ########
+        dists[(start, end)] = dist
     """ n개의 점에 대하여 각각의 shortest path를 구하였다. (총 nP2 개) """
     
     """ shortest path들을 통해서 TSP 적용 """
