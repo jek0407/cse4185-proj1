@@ -5,7 +5,6 @@ from math import *
 from heapq import *
 from typing import List, Tuple, Dict
 
-from maze import Maze
 import itertools
 
 #########################################
@@ -182,7 +181,7 @@ def astar(maze, heuristic_func=manhatten_dist):
 # -------------------- Stage 02: Four circles - A* Algorithm  ------------------------ #
 
 def stage2_heuristic(p1,p2):  
-    return (p1[0]-p2[0])**2 + (p1[1]-p2[1])**2
+    return int(sqrt((p1[0]-p2[0]) ** 2 + (p1[1]-p2[1]) ** 2))
 
 def astar_four_circles(maze):
     """
@@ -259,15 +258,13 @@ def astar_four_circles(maze):
                     children.append(new_node)
 
                 for child in children:
-                    if len([closed_child for closed_child in closed_list if closed_child == child]) > 0:
+                    if child in closed_list:
                         continue
-          
+                    if child in open_list:
+                        continue
+
                     child.g = current_node.g + 1
                     child.h = stage2_heuristic(child.location, end_node.location)
-
-                    for open_node in open_list:
-                        if child == open_node and child.g > open_node.g:
-                            continue
 
                     #print(f"debug : {path_i}, {len(open_list)}")
                     open_list.append(child)
