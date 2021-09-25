@@ -203,9 +203,9 @@ def astar_four_circles(maze):
 
     for end_node_sequence in list(end_node_sequences):
         start_node = Node(None, start_point)
-        is_four = 0
+        n_visited = 0  # 4개 endpoint 방문 여부 확인
         for end_node in end_node_sequence:
-            is_four += 1
+            n_visited += 1
             #print(f"{path_i} {start_node.location}, {end_node.location}")
             path24.append([])
             iteration = 0
@@ -237,7 +237,7 @@ def astar_four_circles(maze):
                     current = current_node
                     start_node = current_node
                     while current is not None:
-                        if is_four == 4:
+                        if n_visited == 4:
                             path24[path_i].append(current.location)
                         current = current.parent
                     break
