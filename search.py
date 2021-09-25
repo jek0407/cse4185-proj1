@@ -90,7 +90,7 @@ class Node:
 def manhatten_dist(p1,p2):
     return abs(p1[0]-p2[0])+abs(p1[1]-p2[1])
 
-def astar(maze):
+def astar(maze, heuristic_func=manhatten_dist):
 
     """
     [문제 02] 제시된 stage1의 맵 세가지를 A* Algorithm을 통해 최단경로를 return하시오.(20점)
@@ -109,7 +109,7 @@ def astar(maze):
     start_node.g = 0 ##
     end_node = Node(None, end_point)
     end_node.g = end_node.h = 0 ##
-    start_node.h = manhatten_dist(start_node.location, end_node.location) ##
+    start_node.h = heuristic_func(start_node.location, end_node.location)
 
     open_list = []
     closed_list = []
@@ -155,7 +155,7 @@ def astar(maze):
             #         continue
 
             child.g = current_node.g + 1
-            child.h = manhatten_dist(child.location, end_node.location)
+            child.h = heuristic_func(child.location, end_node.location)
            
             # if len([i for i in open_list if child == i and child.g > i.g]) > 0:
             #     continue
