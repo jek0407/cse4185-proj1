@@ -199,12 +199,12 @@ def astar_four_circles(maze):
     end_nodes.append(Node(None, end_points[1]))
     end_nodes.append(Node(None, end_points[2]))
     end_nodes.append(Node(None, end_points[3]))
-    end_loops = itertools.permutations(end_nodes, 4)
+    end_node_sequences = itertools.permutations(end_nodes, 4)
 
-    for i in list(end_loops):
+    for end_node_sequence in list(end_node_sequences):
         start_node = Node(None, start_point)
         is_four = 0
-        for end_node in i:
+        for end_node in end_node_sequence:
             is_four += 1
             #print(f"{path_i} {start_node.location}, {end_node.location}")
             path24.append([])
@@ -267,10 +267,10 @@ def astar_four_circles(maze):
 
     min = max_iteration
     flag = 0
-    for i in range(0,24):
-        if min > len(path24[i]) :
-            min = len(path24[i])
-            flag = i
+    for end_node_sequence in range(0,24):
+        if min > len(path24[end_node_sequence]) :
+            min = len(path24[end_node_sequence])
+            flag = end_node_sequence
 
     path = path24[flag]
     #print(f"min : {min}\nflag : {flag}")
